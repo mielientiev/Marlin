@@ -1,0 +1,21 @@
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>./logs/application.log</file>
+        <encoder>
+            <pattern>%date [%.-1level] %message %xException%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [%.-1level] %message %xException%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="play" level="DEBUG"/>
+    <logger name="application" level="TRACE"/>
+    <root level="ERROR">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

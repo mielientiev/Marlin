@@ -1,0 +1,16 @@
+language: scala
+sudo: false
+jdk:
+  - oraclejdk8
+script: sbt -jvm-opts jvmopts.travis +testAll
+
+cache:
+  directories:
+    - $HOME/.sbt
+    - $HOME/.ivy2
+before_cache:
+  # Ensure changes to the cache aren't persisted
+  - rm -rf $HOME/.ivy2/cache/com.marlin/*
+  - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.marlin/*
+  # Delete all ivydata files since ivy touches them on each build
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
