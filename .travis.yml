@@ -4,7 +4,10 @@ scala:
 sudo: false
 jdk:
   - oraclejdk8
-script: sbt -jvm-opts jvmopts.travis +testAll
+script:
+  - sbt -jvm-opts jvmopts.travis clean coverage test coverageReport coverageAggregate
+after_success:
+  - sbt -jvm-opts jvmopts.travis coveralls
 
 cache:
   directories:
