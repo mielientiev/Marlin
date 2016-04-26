@@ -2,7 +2,7 @@
 import play.sbt.PlayScala
 import sbt.Keys._
 import sbt._
-
+import _root_.scoverage.ScoverageKeys._
 
 object MarlinBuild extends Build {
 
@@ -25,15 +25,18 @@ object MarlinBuild extends Build {
       "-Ywarn-numeric-widen", // Warn when numerics are widened.
       "-Xexperimental" // Add experimental scala feature
     ),
+    coverageExcludedPackages := """.*\..*Reverse.*;router.Routes.*;""",
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += ("Atlassian Releases" at "https://maven.atlassian.com/public/"),
     resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
   )
+
   lazy val aRootProject = Project(id = "root", base = file("."),
     settings = Defaults.coreDefaultSettings ++ sharedSettings ++ Seq(
       commands += testAll
     )
   ).aggregate(marlinWeatherExtractorProject, marlinServer)
+
   lazy val marlinWeatherExtractorProject = Project(id = "marlin-weather-extractor", base = file("marlin-weather-extractor"),
     settings = Defaults.coreDefaultSettings ++ sharedSettings ++ Seq(
       name := "Marlin Weather Extractor",
@@ -41,6 +44,7 @@ object MarlinBuild extends Build {
       libraryDependencies ++= Seq(Dependencies.slf4j, Dependencies.logback, Dependencies.typesafeConfig)
     )
   )
+
   lazy val marlinServer = Project(id = "marlin-server", base = file("marlin-server"),
     settings = Defaults.coreDefaultSettings ++ sharedSettings ++ Seq(
       name := "Marlin Server",
