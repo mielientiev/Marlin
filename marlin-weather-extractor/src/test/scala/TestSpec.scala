@@ -7,7 +7,7 @@ class TestSpec extends WordSpec with Matchers {
 
   "This test" should {
     "passs" in {
-      1 + 10 shouldEqual 11
+      Main.add(1)(10) shouldEqual 11
     }
   }
 }
