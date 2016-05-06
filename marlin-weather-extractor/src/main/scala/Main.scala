@@ -3,8 +3,6 @@
   */
 object Main {
 
-  def main(args: Array[String]) {
-    println("Hello World")
-  }
+  val add: Int => Int => Int = a => b => a + b
 
 }

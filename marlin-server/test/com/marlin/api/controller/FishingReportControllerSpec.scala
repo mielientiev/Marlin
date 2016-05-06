@@ -70,7 +70,7 @@ class FishingReportControllerSpec extends PlaySpec with OneAppPerSuite with Mock
       val result = call(controller.getAll(from = 0, limit = 10), FakeRequest(GET, "/api/fishreport?from=0&limit=10"))
 
       status(result) mustEqual OK
-      contentAsJson(result) mustBe Json.obj("fishingReports" -> reports)
+      contentAsJson(result) mustBe Json.toJson(reports)
       verify(fishService).findAll(0, 10)
     }
 
