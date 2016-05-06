@@ -13,6 +13,10 @@ import play.api.mvc.Action
 @Singleton
 class FishingReportController @Inject()(fishingReportService: FishingReportService) extends CrudController {
 
+  def delete(id: String) = Action.async {
+    fishingReportService.delete(id).map(_ => NoContent)
+  }
+
   def getAll(from: Int, limit: Int) = Action.async {
     validatePagination(from, limit) {
       fishingReportService.findAll(from, limit)

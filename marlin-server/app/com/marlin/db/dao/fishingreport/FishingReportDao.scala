@@ -9,6 +9,8 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[MongoFishingReportDao])
 trait FishingReportDao {
 
+  def delete(id: String): Future[Long]
+
   def findAll(from: Int, limit: Int): Future[Seq[FishingReport]]
 
   def save(report: FishingReport): Future[FishingReport]

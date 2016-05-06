@@ -1,6 +1,6 @@
 package com.marlin.api.util
 
-import com.marlin.api.error.{ApiError, ApiValidationError}
+import com.marlin.api.error.{ApiMessage, ApiValidationError}
 import com.wix.accord.{Failure, Success, _}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
@@ -23,7 +23,7 @@ trait CrudController extends Controller {
 
   def to[A](jsonBody: JsValue)(block: A => Future[Result])(implicit writes: Reads[A]): Future[Result] = {
     jsonBody.validate[A].fold(
-      error => Future.successful(BadRequest(Json.toJson(ApiError("Invalid json: " + jsonBody.toString)))),
+      error => Future.successful(BadRequest(Json.toJson(ApiMessage("Invalid json: " + jsonBody.toString)))),
       report => block(report)
     )
   }

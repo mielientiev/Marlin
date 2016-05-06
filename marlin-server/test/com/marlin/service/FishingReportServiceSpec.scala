@@ -60,6 +60,16 @@ class FishingReportServiceSpec extends WordSpec with Matchers with ScalaFutures 
       verify(repository).findAll(0, 10)
     }
 
+    "delete report and return num of deleted reports" in new Scope {
+      when(repository.delete("1111")).thenReturn(Future.successful(1L))
+
+      val result = fishingReportService.delete("1111")
+      whenReady(result) { res =>
+        res shouldBe 1L
+      }
+      verify(repository).delete("1111")
+    }
+
   }
 
 }

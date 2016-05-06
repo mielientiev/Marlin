@@ -97,5 +97,23 @@ class MongoFishingReportDaoSpec extends WordSpec with Matchers with MongoScalaTe
         reports should have size 1
       }
     }
+
+    "delete single report from storage and return 1" in new Scope {
+      LoadFromResource("./datasets/fishing-report/singleReport.json", "marlin", "fishingReports") ~> {
+        val deletedF = mongoFishingReportDao.delete("111-111-111-111")
+        val deletedNum = Await.result(deletedF, 10.second)
+
+        deletedNum shouldBe 1
+      }
+    }
+
+    "return 0 if report doesn't exist and nothing happens" in new Scope {
+      ClearAfterTest("marlin", "fishingReports") ~> {
+        val deletedF = mongoFishingReportDao.delete("111-111-111-111")
+        val deletedNum = Await.result(deletedF, 10.second)
+
+        deletedNum shouldBe 0
+      }
+    }
   }
 }
