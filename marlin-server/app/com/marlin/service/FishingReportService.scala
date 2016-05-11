@@ -8,6 +8,10 @@ import scala.concurrent.Future
 
 class FishingReportService @Inject() (fishingReportDao: FishingReportDao) {
 
+  def delete(id: String): Future[Long] = {
+    fishingReportDao.delete(id)
+  }
+
   def findAll(from: Int, limit: Int): Future[Seq[FishingReport]] = {
     fishingReportDao.findAll(from, limit)
   }

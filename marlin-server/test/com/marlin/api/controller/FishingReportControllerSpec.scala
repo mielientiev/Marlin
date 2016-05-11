@@ -1,7 +1,7 @@
 package com.marlin.api.controller
 
 import akka.stream.Materializer
-import com.marlin.api.error.{ApiError, ApiValidationError}
+import com.marlin.api.error.{ApiMessage, ApiValidationError}
 import com.marlin.model.{Catch, FishingReport, Lure}
 import com.marlin.service.FishingReportService
 import org.mockito.Mockito._
@@ -60,7 +60,7 @@ class FishingReportControllerSpec extends PlaySpec with OneAppPerSuite with Mock
       val result = call(controller.saveReport(), request)
 
       status(result) mustEqual BAD_REQUEST
-      contentAsJson(result) mustBe Json.toJson(ApiError("Invalid json: \"{abc: 1}\""))
+      contentAsJson(result) mustBe Json.toJson(ApiMessage("Invalid json: \"{abc: 1}\""))
       verifyZeroInteractions(fishService)
     }
 
@@ -114,6 +114,23 @@ class FishingReportControllerSpec extends PlaySpec with OneAppPerSuite with Mock
         Seq(ApiValidationError(Some("limit"), "got -2, expected more than 0"), ApiValidationError(Some("from"), "got -1, expected 0 or more")))
       verifyZeroInteractions(fishService)
     }
+
+    "return NoContent if document exist while deleting" in new Scope {
+      when(fishService.delete("11111-1111-1111")).thenReturn(Future.successful(1L))
+      val result = call(controller.delete("11111-1111-1111"), FakeRequest(DELETE, "/api/fishreport/11111-1111-1111"))
+
+      status(result) mustEqual NO_CONTENT
+      verify(fishService).delete("11111-1111-1111")
+    }
+
+    "return NoContent if document dosnt exist while deleting " in new Scope {
+      when(fishService.delete("11111-1111-1111")).thenReturn(Future.successful(0L))
+      val result = call(controller.delete("11111-1111-1111"), FakeRequest(DELETE, "/api/fishreport/11111-1111-1111"))
+
+      status(result) mustEqual NO_CONTENT
+      verify(fishService).delete("11111-1111-1111")
+    }
+
   }
 
 }

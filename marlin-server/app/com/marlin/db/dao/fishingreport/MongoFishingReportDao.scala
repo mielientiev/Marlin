@@ -36,4 +36,9 @@ class MongoFishingReportDao @Inject()(client: MarlinMongoClient) extends Fishing
     }
   }
 
+  override def delete(id: String): Future[Long] = {
+    collection.deleteOne(Document("id" -> id)).toFuture().map(docSeq =>
+      docSeq.head.getDeletedCount
+    )
+  }
 }
