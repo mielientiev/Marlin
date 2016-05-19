@@ -35,3 +35,4 @@ class FishingReportController @Inject()(fishingReportService: FishingReportServi
     }
   }
 }
+

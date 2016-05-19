@@ -15,8 +15,8 @@ import scala.concurrent.duration._
 class MongoFishingReportDaoSpec extends WordSpec with Matchers with MongoScalaTest {
 
   private val configMap = Map(
-    "marlin.db.mongo.url" -> embedConnectionURL,
-    "marlin.db.mongo.port" -> embedConnectionPort,
+    "marlin.db.mongo.url" -> mongoConnectionURL,
+    "marlin.db.mongo.port" -> mongoConnectionPort,
     "marlin.db.mongo.database" -> "marlin"
   )
 

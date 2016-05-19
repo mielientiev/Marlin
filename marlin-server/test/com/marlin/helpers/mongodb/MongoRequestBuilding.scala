@@ -1,6 +1,7 @@
 package com.marlin.helpers.mongodb
 
 import java.io.{File, InputStream}
+
 import scala.io.Source
 
 trait MongoRequestBuilding {
