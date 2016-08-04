@@ -1,5 +1,9 @@
 
+GET         /api/user/authorized                com.marlin.api.controller.UserController.authorized()
+POST        /api/user/signup                    com.marlin.api.controller.UserController.signUp()
+POST        /api/user/login                     com.marlin.api.controller.UserController.logIn()
+POST        /api/user/logout                    com.marlin.api.controller.UserController.logOut()
 
-GET         /api/fishreport/:id        com.marlin.api.controller.FishingReportController.getById(id)
-POST        /api/fishreport            com.marlin.api.controller.FishingReportController.saveReport()
-GET         /api/fishreport            com.marlin.api.controller.FishingReportController.getAll(from: Int ?= 0, limit: Int ?= 20)
+GET         /api/fishreport/:id                 com.marlin.api.controller.FishingReportController.getById(id)
+POST        /api/fishreport                     com.marlin.api.controller.FishingReportController.saveReport()
+GET         /api/fishreport                     com.marlin.api.controller.FishingReportController.getAll(from: Int ?= 0, limit: Int ?= 20)

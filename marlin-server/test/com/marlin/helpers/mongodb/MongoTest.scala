@@ -3,10 +3,10 @@ package com.marlin.helpers.mongodb
 import org.mongodb.scala.bson.collection.immutable.Document
 import org.mongodb.scala.{Completed, MongoCollection}
 import org.scalatest.Suite
+import play.api.Logger
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-
 
 trait MongoTest extends MongoRequestBuilding with EmbeddedMongo {
   this: MongoTestFrameworkInterface ⇒
@@ -39,18 +39,21 @@ trait MongoTest extends MongoRequestBuilding with EmbeddedMongo {
 
 }
 
-
 trait MongoScalaTest extends MongoTest with MongoTestFrameworkInterface.ScalaTest {
   this: Suite =>
 
+  def mongoConnectionURL: String = embedConnectionURL
+  def mongoConnectionPort: String = embedConnectionPort.toString
+
   override def setup() = {
+    Logger.info("starting embedded mongodb server...")
     mongod
   }
 
   override def cleanUp() = {
+    Logger.info("closing embedded mongodb server...")
     mongoDB.close()
     mongod.stop()
     mongodExe.stop()
   }
-
 }

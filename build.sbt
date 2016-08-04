@@ -30,7 +30,7 @@ lazy val sharedSettings = Seq(
 
 lazy val aRootProject = Project(id = "root", base = file("."),
   settings = Defaults.coreDefaultSettings ++ sharedSettings
-).aggregate(marlinWeatherExtractorProject, marlinServer)
+).aggregate(marlinWeatherExtractorProject, marlinServer, marlinIntegration)
 
 lazy val marlinWeatherExtractorProject = Project(id = "marlin-weather-extractor", base = file("marlin-weather-extractor"),
   settings = Defaults.coreDefaultSettings ++ sharedSettings ++ Seq(
@@ -47,3 +47,11 @@ lazy val marlinServer = Project(id = "marlin-server", base = file("marlin-server
     libraryDependencies ++= Dependencies.marlinServerDependencies
   )
 ).enablePlugins(PlayScala)
+
+lazy val marlinIntegration = Project(id ="marlin-integration", base = file("marlin-integration"),
+  settings = Defaults.coreDefaultSettings ++ sharedSettings ++ Seq(
+    name := "Marlin Integration",
+    version := "0.0.1-SNAPSHOT",
+    libraryDependencies ++= Dependencies.marlinIntegrationDependencies
+  )
+).dependsOn(marlinServer % "test;test->test")

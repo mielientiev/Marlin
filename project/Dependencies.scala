@@ -13,7 +13,14 @@ object Dependencies {
   val ficus = "com.iheart" %% "ficus" % "1.2.3"
   val scalaGuice = "net.codingwell" %% "scala-guice" % "4.0.1"
 
-  val marlinServerDependencies = Seq(playScalaTest, mongoDbDriver, mockito, accordValidator, mongoEmbedded, ficus, scalaGuice)
-  val marlinWeatherDependencies = Seq(slf4j, logback, typesafeConfig)
+  val silhouette = "com.mohiva" %% "play-silhouette" % "4.0.0-BETA4"
+  val silhouettePasswordBcrypt = "com.mohiva" %% "play-silhouette-password-bcrypt" % "4.0.0-BETA4"
+  val silhouettePersistenceMemory = "com.mohiva" %% "play-silhouette-persistence-memory" % "4.0.0-BETA4"
+  val silhouetteTestKit = "com.mohiva" %% "play-silhouette-testkit" % "4.0.0-BETA4" % "test"
+
   val commonDependencies = Seq(scalaTest)
+  val marlinServerDependencies = Seq(playScalaTest, mongoDbDriver, mockito, accordValidator, mongoEmbedded, ficus,
+    scalaGuice, silhouette, silhouettePasswordBcrypt, silhouettePersistenceMemory, silhouetteTestKit)
+  val marlinWeatherDependencies = Seq(slf4j, logback, typesafeConfig)
+  val marlinIntegrationDependencies = Seq()
 }
